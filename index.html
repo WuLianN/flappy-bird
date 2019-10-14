@@ -1,0 +1,41 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-02-07 16:30:41
+ * @LastEditTime: 2019-10-14 18:27:35
+ * @LastEditors: Please set LastEditors
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlappyBird</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas"></canvas>
+
+<script src="js/Game.js"></script>
+<script src="js/Background.js"></script>
+<script src="js/Land.js"></script>
+<script src="js/Pipe.js"></script>
+<script src="js/Bird.js"></script>
+<script src="js/SceneManager.js"></script>
+
+<script type="text/javascript">
+    const game = new Game({
+        "id": "#myCanvas",
+        "resJsonUrl": "res.json"
+    });
+
+    //console.log(game)
+</script>
+</body>
+</html>
