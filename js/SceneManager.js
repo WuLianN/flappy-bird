@@ -2,7 +2,7 @@
  * @Description: 场景管理器
  * @Author: your name
  * @Date: 2019-02-06 16:27:51
- * @LastEditTime: 2019-10-14 18:26:05
+ * @LastEditTime: 2019-10-15 12:31:45
  * @LastEditors: Please set LastEditors
  */
 
@@ -54,7 +54,7 @@ class SceneManager {
                 //实例化管子
                 game.fno % 150 === 0 && (new Pipe());
                 //更新管子
-                for (var i = 0; i < game.pipeArr.length; i++) {
+                for (let i = 0; i < game.pipeArr.length; i++) {
                     game.pipeArr[i] && game.pipeArr[i].update();
                 }
                 break;
@@ -120,12 +120,12 @@ class SceneManager {
                 game.bird.render();
                 game.land.render();
                 //渲染管子
-                for (var i = 0; i < game.pipeArr.length; i++) {
+                for (let i = 0; i < game.pipeArr.length; i++) {
                     game.pipeArr[i] && game.pipeArr[i].render();
                 }
                 //打印分数
                 var scoreLength = game.score.toString().length;  //获取分数位数
-                for (var i = 0; i < scoreLength; i++) {
+                for (let i = 0; i < scoreLength; i++) {
                     //分数居中
                     game.ctx.drawImage(game.res["number" + game.score.toString().charAt(i)], (game.canvas.width / 2) - (scoreLength / 2 * 34) + (34 * i), 100);
                 }
@@ -150,12 +150,12 @@ class SceneManager {
                 game.ctx.fillRect(0, 0, game.canvas.width, game.canvas.height);
 
                 //渲染管子
-                for (var i = 0; i < game.pipeArr.length; i++) {
+                for (let i = 0; i < game.pipeArr.length; i++) {
                     game.pipeArr[i] && game.pipeArr[i].render();
                 }
                 //打印分数
                 var scoreLength = game.score.toString().length;  //获取分数位数
-                for (var i = 0; i < scoreLength; i++) {
+                for (let i = 0; i < scoreLength; i++) {
                     //分数居中
                     game.ctx.drawImage(game.res["number" + game.score.toString().charAt(i)], (game.canvas.width / 2) - (scoreLength / 2 * 34) + (34 * i), 100);
                 }
@@ -166,7 +166,7 @@ class SceneManager {
                 game.land.render();
                 //打印分数
                 var scoreLength = game.score.toString().length;  //获取分数位数
-                for (var i = 0; i < scoreLength; i++) {
+                for (let i = 0; i < scoreLength; i++) {
                     //分数居中
                     game.ctx.drawImage(game.res["number" + game.score.toString().charAt(i)], (game.canvas.width / 2) - (scoreLength / 2 * 34) + (34 * i), 100);
                 }
@@ -225,7 +225,7 @@ class SceneManager {
     //添加监听
     bindEvent() {
         // console.log(this) // SceneManager {}
-        
+
         const self = this; // 绑定 SceneManager 
         game.canvas.onclick = (event) => {
             // console.log(this) // <canvas id="myCanvas" width="375" height="667">

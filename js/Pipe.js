@@ -2,7 +2,7 @@
  * @Description: 管子类
  * @Author: your name
  * @Date: 2019-02-03 21:27:43
- * @LastEditTime: 2019-10-14 18:08:59
+ * @LastEditTime: 2019-10-15 12:17:01
  * @LastEditors: Please set LastEditors
  */
 
@@ -48,9 +48,11 @@ class Pipe {
             this.ispassed = true;
         }
 
-        // 检测这个管子是否已经出了视口，如果时，要从数组中删除这个管子
+        // 检测这个管子是否已经出了视口，如果是，要从数组中删除这个管子
         if (this.x < -52) {
-            for (var i = 0; i < game.pipeArr.length; i++) {
+            for (let i = 0; i < game.pipeArr.length; i++) {
+                //console.log(this);
+
                 if (game.pipeArr[i] = this) {
                     game.pipeArr.splice(i, 1);
                 }
