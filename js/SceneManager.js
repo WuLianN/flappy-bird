@@ -2,7 +2,7 @@
  * @Description: 场景管理器
  * @Author: your name
  * @Date: 2019-02-06 16:27:51
- * @LastEditTime: 2019-10-15 12:31:45
+ * @LastEditTime: 2019-10-17 17:52:08
  * @LastEditors: Please set LastEditors
  */
 
@@ -91,89 +91,82 @@ class SceneManager {
 
     render() {
         //根据当前的场景，来决定做什么
-        switch (this.sceneNumber) {
-            case 1:
-                //渲染背景
-                game.bg.render();
+        if (this.sceneNumber === 1) {
+            //渲染背景
+            game.bg.render();
+            game.bird.render();
+            game.land.render();
+            game.bird.x = game.canvas.width / 2;
+            game.bird.y = 250;
+            //画logo、button
+            game.ctx.drawImage(game.res["logo"], game.canvas.width / 2 - 89, this.logoY);
+            game.ctx.drawImage(game.res["button_play"], this.button_playX, this.button_playY);
+        } else if (this.sceneNumber === 2) {
+            //渲染背景
+            game.bg.render();
+            game.bird.render();
+            game.land.render();
+            //画教程小图
+            game.ctx.save();
+            game.ctx.globalAlpha = this.tutorialOpacity;  //透明度
+            game.ctx.drawImage(game.res["tutorial"], game.canvas.width / 2 - 57, 240);
+            game.ctx.restore();
+        } else if (this.sceneNumber === 3) {
+            //渲染背景
+            game.bg.render();
+            game.bird.render();
+            game.land.render();
+            //渲染管子
+            for (let i = 0; i < game.pipeArr.length; i++) {
+                game.pipeArr[i] && game.pipeArr[i].render();
+            }
+            //打印分数
+            const scoreLength = game.score.toString().length;  //获取分数位数
+            for (let i = 0; i < scoreLength; i++) {
+                //分数居中
+                game.ctx.drawImage(game.res["number" + game.score.toString().charAt(i)], (game.canvas.width / 2) - (scoreLength / 2 * 34) + (34 * i), 100);
+            }
+        } else if (this.sceneNumber === 4) {
+            //渲染背景
+            game.bg.render();
+            game.land.render();
+            if (!this.isBirdLand) {
                 game.bird.render();
-                game.land.render();
-                game.bird.x = game.canvas.width / 2;
-                game.bird.y = 250;
-                //画logo、button
-                game.ctx.drawImage(game.res["logo"], game.canvas.width / 2 - 89, this.logoY);
-                game.ctx.drawImage(game.res["button_play"], this.button_playX, this.button_playY);
-                break;
-            case 2:
-                //渲染背景
-                game.bg.render();
-                game.bird.render();
-                game.land.render();
-                //画教程小图
-                game.ctx.save();
-                game.ctx.globalAlpha = this.tutorialOpacity;  //透明度
-                game.ctx.drawImage(game.res["tutorial"], game.canvas.width / 2 - 57, 240);
-                game.ctx.restore();
-                break;
-            case 3:
-                //渲染背景
-                game.bg.render();
-                game.bird.render();
-                game.land.render();
-                //渲染管子
-                for (let i = 0; i < game.pipeArr.length; i++) {
-                    game.pipeArr[i] && game.pipeArr[i].render();
-                }
-                //打印分数
-                var scoreLength = game.score.toString().length;  //获取分数位数
-                for (let i = 0; i < scoreLength; i++) {
-                    //分数居中
-                    game.ctx.drawImage(game.res["number" + game.score.toString().charAt(i)], (game.canvas.width / 2) - (scoreLength / 2 * 34) + (34 * i), 100);
-                }
-                break;
-            //场景3，4渲染相同
-            case 4:
-                //渲染背景
-                game.bg.render();
-                game.land.render();
-                if (!this.isBirdLand) {
-                    game.bird.render();
+            } else {
+                //渲染爆炸特效
+                if (this.bombStep < 5) {
+                    game.ctx.drawImage(game.res["b" + this.bombStep], game.bird.x - 24, game.bird.y - 24, 80, 80);
                 } else {
-                    //渲染爆炸特效
-                    if (this.bombStep < 5) {
-                        game.ctx.drawImage(game.res["b" + this.bombStep], game.bird.x - 24, game.bird.y - 24, 80, 80);
-                    } else {
-                        this.enter(5);
-                    }
+                    this.enter(5);
                 }
-                //渲染白屏
-                game.ctx.fillStyle = "rgba(255, 255, 255, " + this.maskOpacity + ")";
-                game.ctx.fillRect(0, 0, game.canvas.width, game.canvas.height);
+            }
+            //渲染白屏
+            game.ctx.fillStyle = "rgba(255, 255, 255, " + this.maskOpacity + ")";
+            game.ctx.fillRect(0, 0, game.canvas.width, game.canvas.height);
 
-                //渲染管子
-                for (let i = 0; i < game.pipeArr.length; i++) {
-                    game.pipeArr[i] && game.pipeArr[i].render();
-                }
-                //打印分数
-                var scoreLength = game.score.toString().length;  //获取分数位数
-                for (let i = 0; i < scoreLength; i++) {
-                    //分数居中
-                    game.ctx.drawImage(game.res["number" + game.score.toString().charAt(i)], (game.canvas.width / 2) - (scoreLength / 2 * 34) + (34 * i), 100);
-                }
-                break;
-            case 5:
-                //渲染
-                game.bg.render();
-                game.land.render();
-                //打印分数
-                var scoreLength = game.score.toString().length;  //获取分数位数
-                for (let i = 0; i < scoreLength; i++) {
-                    //分数居中
-                    game.ctx.drawImage(game.res["number" + game.score.toString().charAt(i)], (game.canvas.width / 2) - (scoreLength / 2 * 34) + (34 * i), 100);
-                }
-                //画gameover
-                game.ctx.drawImage(game.res["gameover"], game.canvas.width / 2 - 98, this.gameoverY);
-                game.ctx.drawImage(game.res["button_play"], this.button_playX, this.button_playY);
-                break;
+            //渲染管子
+            for (let i = 0; i < game.pipeArr.length; i++) {
+                game.pipeArr[i] && game.pipeArr[i].render();
+            }
+            //打印分数
+            const scoreLength = game.score.toString().length;  //获取分数位数
+            for (let i = 0; i < scoreLength; i++) {
+                //分数居中
+                game.ctx.drawImage(game.res["number" + game.score.toString().charAt(i)], (game.canvas.width / 2) - (scoreLength / 2 * 34) + (34 * i), 100);
+            }
+        } else if (this.sceneNumber === 5) {
+            //渲染
+            game.bg.render();
+            game.land.render();
+            //打印分数
+            const scoreLength = game.score.toString().length;  //获取分数位数
+            for (let i = 0; i < scoreLength; i++) {
+                //分数居中
+                game.ctx.drawImage(game.res["number" + game.score.toString().charAt(i)], (game.canvas.width / 2) - (scoreLength / 2 * 34) + (34 * i), 100);
+            }
+            //画gameover
+            game.ctx.drawImage(game.res["gameover"], game.canvas.width / 2 - 98, this.gameoverY);
+            game.ctx.drawImage(game.res["button_play"], this.button_playX, this.button_playY);
         }
     }
 
@@ -190,7 +183,7 @@ class SceneManager {
                 game.bird.fno = 0;
                 // 初始化帧编号
                 game.fno = 0;
-             
+
                 break;
             case 2:
                 //进入2号场景
@@ -231,7 +224,7 @@ class SceneManager {
             // console.log(this) // <canvas id="myCanvas" width="375" height="667">
             const mouseX = event.clientX;
             const mouseY = event.clientY;
-            
+
             //点击判断当前的场景号
             switch (self.sceneNumber) {
                 case 1:
